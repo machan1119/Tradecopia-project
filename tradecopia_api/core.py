@@ -4,15 +4,17 @@ import json
 from util import generate_strong_password, generate_random_hostname
 
 # === CONFIGURATION ===
-CLOUD_VIRT_URL = "https://198.12.103.118:4083"
+CLOUD_VIRT_URL = "https://tradecopia.cloud.tradingvps.io"
 ADMIN_VIRT_URL = "https://198.12.103.118:4085"
-CLOUD_API_KEY = "Y907LNTFNJVBW0DG"
-CLOUD_API_PASS = "0zNq8AYgFE7WFVXo7RQuHEHi1YDOpdXA"
+CLOUD_API_KEY = "3IWHKUJ2BBS98OAW"
+CLOUD_API_PASS = "V16P1njOpYIAp1P2PJdLWYpztMEzrTqv"
 ADMIN_API_KEY = "fMRPCSlQ0p293PEgKVsjCaUci6cbjyIu"
 ADMIN_API_PASS = "Xa32wAP62F41Y96ulrc94lVH08JfRksF"
 
 # Disable SSL warnings if using self-signed certificate
 requests.packages.urllib3.disable_warnings()
+
+
 # === Helper Function ===
 def virt_api(action, params=None, method="GET", do=False, permission="admin"):
     """Send Admin/API request to Virtualizor with robust handling.
@@ -26,7 +28,11 @@ def virt_api(action, params=None, method="GET", do=False, permission="admin"):
 
     if permission == "admin":
         VIRT_URL = ADMIN_VIRT_URL
-        common = {"api": "json", "adminapikey": ADMIN_API_KEY, "adminapipass": ADMIN_API_PASS}
+        common = {
+            "api": "json",
+            "adminapikey": ADMIN_API_KEY,
+            "adminapipass": ADMIN_API_PASS,
+        }
     else:
         VIRT_URL = CLOUD_VIRT_URL
         common = {"api": "json", "apikey": CLOUD_API_KEY, "apipass": CLOUD_API_PASS}
@@ -38,7 +44,9 @@ def virt_api(action, params=None, method="GET", do=False, permission="admin"):
 
     try:
         if method.upper() == "POST":
-            resp = requests.post(base, params=common, data=params, verify=False, timeout=60)
+            resp = requests.post(
+                base, params=common, data=params, verify=False, timeout=60
+            )
         else:
             merged = {**params, **common}
             resp = requests.get(base, params=merged, verify=False, timeout=30)
@@ -46,6 +54,7 @@ def virt_api(action, params=None, method="GET", do=False, permission="admin"):
         return {"ok": False, "error": str(e), "url": base}
 
     return resp.json()
+
 
 # === Add users ===
 def add_user(email):
@@ -57,15 +66,17 @@ def add_user(email):
     result = virt_api("adduser", data, method="POST", do=True, permission="cloud")
     return result
 
+
 # === Get uid with email ===
 def get_uid_with_email(email):
     data = {
         "email": email,
     }
     user_list = virt_api("users", data, method="POST", do=True, permission="admin")
-    user_keys = list(user_list['users'].keys())
+    user_keys = list(user_list["users"].keys())
     user_id = user_keys[0]
     return user_id
+
 
 # === CREATE VPS ===
 def create_vps(user_id):
@@ -73,46 +84,42 @@ def create_vps(user_id):
     vps_pass = generate_strong_password()
     data = {
         "virt": "kvm",
-        "uid" : user_id,
+        "uid": user_id,
         "plid": 1,
         "osid": 1122,
         "hostname": generate_random_hostname(),
         "rootpass": vps_pass,
         "addvps": 1,
-        "node_select": 1
+        "node_select": 1,
     }
 
     result = virt_api("addvs", data, method="POST", do=True, permission="admin")
-    ip_address = result['newvs']['ips'][0]
-    return {
-        "ip_address": ip_address,
-        "password": vps_pass
-    }
+    ip_address = result["newvs"]["ips"][0]
+    return {"ip_address": ip_address, "password": vps_pass}
+
 
 # === DELETE VPS ===
 def get_vps_id_with_email(email):
-    data = {
-        "user": email
-    }
+    data = {"user": email}
 
     vps_list = virt_api("vs", data, method="POST", do=True, permission="admin")
-    vps_ids = list(vps_list['vs'].keys())
-    print("vps_ids", vps_ids)
+    vps_ids = list(vps_list["vs"].keys())
     return vps_ids[0]
+
 
 # === DELETE VPS ===
 def delete_vps(vps_id):
     data = {"delete": vps_id}
     result = virt_api("vs", data, method="POST", do=True, permission="admin")
-    return result['done']
+    return result["done"]
+
 
 # === DELETE users ===
 def delete_user(user_id):
-    data = {
-        "delete": user_id
-    }
+    data = {"delete": user_id}
     result = virt_api("users", data, method="POST", do=True, permission="admin")
     return result["done"]
+
 
 def add_user_admin():
     data = {

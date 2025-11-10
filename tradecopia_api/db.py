@@ -18,7 +18,10 @@ class VpsRecord(TypedDict, total=False):
 
 _UTC_MINUS_FIVE = timezone(timedelta(hours=-5))
 
-_MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+_MONGO_URI = os.getenv(
+    "MONGO_URI",
+    "mongo_uri",
+)
 _MONGO_DB = os.getenv("MONGO_DB", "tradecopia")
 _MONGO_COLLECTION = os.getenv("MONGO_COLLECTION", "vps_records")
 
@@ -39,8 +42,12 @@ def _serialize(record: Optional[VpsRecord]) -> Optional[dict]:
         "email": record.get("email"),
         "ip_address": record.get("ip_address"),
         "password": record.get("password"),
-        "create_date": record.get("create_date").isoformat() if record.get("create_date") else None,
-        "delete_date": record.get("delete_date").isoformat() if record.get("delete_date") else None,
+        "create_date": (
+            record.get("create_date").isoformat() if record.get("create_date") else None
+        ),
+        "delete_date": (
+            record.get("delete_date").isoformat() if record.get("delete_date") else None
+        ),
     }
 
 
@@ -79,5 +86,3 @@ def mark_vps_deleted(email: str) -> Optional[dict]:
         return_document=ReturnDocument.AFTER,
     )
     return _serialize(updated)
-
-

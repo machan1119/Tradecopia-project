@@ -1,6 +1,6 @@
 import { MongoClient, Collection, Document } from "mongodb";
 
-const uri = process.env.MONGO_URI ?? "mongodb://localhost:27017";
+const uri = process.env.MONGO_URI ?? "mongo_uri";
 const dbName = process.env.MONGO_DB ?? "tradecopia";
 const collectionName = process.env.MONGO_COLLECTION ?? "vps_records";
 
