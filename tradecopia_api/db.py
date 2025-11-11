@@ -2,9 +2,11 @@ import os
 from datetime import datetime, timedelta, timezone
 from typing import Optional, TypedDict
 from uuid import uuid4
-
+from dotenv import load_dotenv
 from pymongo import MongoClient, ReturnDocument
 from pymongo.collection import Collection
+
+load_dotenv()
 
 
 class VpsRecord(TypedDict, total=False):

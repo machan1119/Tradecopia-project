@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import LoginForm from "./LoginForm";
-import { AUTH_COOKIE_NAME, AUTH_TOKEN, LOGIN_EMAIL } from "@/lib/auth";
+import { AUTH_COOKIE_NAME, AUTH_TOKEN } from "@/lib/auth";
 
 export default async function LoginPage() {
   const session = (await cookies()).get(AUTH_COOKIE_NAME)?.value;
@@ -21,11 +21,7 @@ export default async function LoginPage() {
             Enter the admin credential to access the dashboard.
           </p>
         </div>
-        <LoginForm defaultEmail={LOGIN_EMAIL} />
-        <p className="text-xs text-slate-500">
-          Tip: configure `LOGIN_EMAIL` / `LOGIN_PASSWORD` (and optionally
-          `AUTH_TOKEN`) environment variables for production use.
-        </p>
+        <LoginForm/>
       </div>
     </div>
   );

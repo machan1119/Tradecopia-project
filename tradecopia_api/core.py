@@ -1,15 +1,18 @@
 import requests
 import json
-
+import os
 from util import generate_strong_password, generate_random_hostname
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # === CONFIGURATION ===
-CLOUD_VIRT_URL = "https://tradecopia.cloud.tradingvps.io"
-ADMIN_VIRT_URL = "https://198.12.103.118:4085"
-CLOUD_API_KEY = "3IWHKUJ2BBS98OAW"
-CLOUD_API_PASS = "V16P1njOpYIAp1P2PJdLWYpztMEzrTqv"
-ADMIN_API_KEY = "fMRPCSlQ0p293PEgKVsjCaUci6cbjyIu"
-ADMIN_API_PASS = "Xa32wAP62F41Y96ulrc94lVH08JfRksF"
+CLOUD_VIRT_URL = os.getenv("CLOUD_VIRT_URL", "CLOUD_VIRT_URL")
+ADMIN_VIRT_URL = os.getenv("ADMIN_VIRT_URL", "ADMIN_VIRT_URL")
+CLOUD_API_KEY = os.getenv("CLOUD_API_KEY", "CLOUD_API_KEY")
+CLOUD_API_PASS = os.getenv("CLOUD_API_PASS", "CLOUD_API_PASS")
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "ADMIN_API_KEY")
+ADMIN_API_PASS = os.getenv("ADMIN_API_PASS", "ADMIN_API_PASS")
 
 # Disable SSL warnings if using self-signed certificate
 requests.packages.urllib3.disable_warnings()

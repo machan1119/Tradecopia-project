@@ -2,6 +2,7 @@ import os
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import APIKeyHeader
+from dotenv import load_dotenv
 
 from core import (
     add_user,
@@ -12,6 +13,8 @@ from core import (
     delete_user,
 )
 from db import save_vps_creation, mark_vps_deleted
+
+load_dotenv()
 
 # Load API key from environment variable
 API_KEY = os.getenv("API_KEY", "api_key")
