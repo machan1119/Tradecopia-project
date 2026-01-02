@@ -89,7 +89,7 @@ def create_vps(user_id):
         "virt": "kvm",
         "uid": user_id,
         "plid": 1,
-        "osid": 1122,
+        "osid": 1017,
         "hostname": generate_random_hostname(),
         "rootpass": vps_pass,
         "addvps": 1,

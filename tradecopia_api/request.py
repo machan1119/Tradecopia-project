@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Get API key from environment variable
-API_KEY = os.getenv("API_KEY", "V16P1njOpYIAp1cccLWYpztMEzrTqv")
+API_KEY = os.getenv("API_KEY", "api_key")
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 
 
@@ -18,7 +18,7 @@ def make_authenticated_request(action: str, payload: dict):
         f"{API_BASE_URL}/{action}",
         json=payload,
         headers=headers,
-        verify=False,
+        verify=True,
         timeout=60,
     )
 
@@ -28,11 +28,11 @@ def make_authenticated_request(action: str, payload: dict):
 
 
 def test():
-    """Test function to demonstrate API usage."""
+    # """Test function to demonstrate API usage."""
     action = "delete_vps"
     # action = "create_vps"
 
-    payload = {"email": "secondtest@gmail.com"}
+    payload = {"email": "a9kugu2u@tradecopia.com"}
 
     try:
         result = make_authenticated_request(action, payload)
