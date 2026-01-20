@@ -29,10 +29,11 @@ def make_authenticated_request(action: str, payload: dict):
 
 def test():
     # """Test function to demonstrate API usage."""
-    action = "delete_vps"
-    # action = "create_vps"
+    # action = "delete_vps"
+    action = "create_vps"
 
-    payload = {"email": "a9kugu2u@tradecopia.com"}
+    payload = {"email": "test@tradecopia.com", "plan_id": 2}
+    # payload = {"email": "test@tradecopia.com"}
 
     try:
         result = make_authenticated_request(action, payload)

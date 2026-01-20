@@ -82,14 +82,14 @@ def get_uid_with_email(email):
 
 
 # === CREATE VPS ===
-def create_vps(user_id):
+def create_vps(user_id, plan_id):
     # Mirror the PHP addvs_v2 sample, using PHP-style field encoding
     vps_pass = generate_strong_password()
     data = {
         "virt": "kvm",
         "uid": user_id,
-        "plid": 1,
-        "osid": 1017,
+        "plid": plan_id,
+        "osid": 1108,
         "hostname": generate_random_hostname(),
         "rootpass": vps_pass,
         "addvps": 1,
@@ -98,7 +98,7 @@ def create_vps(user_id):
 
     result = virt_api("addvs", data, method="POST", do=True, permission="admin")
     ip_address = result["newvs"]["ips"][0]
-    return {"ip_address": ip_address, "password": vps_pass}
+    return {"ip_address": ip_address, "password": vps_pass, "plan_id": plan_id}
 
 
 # === DELETE VPS ===

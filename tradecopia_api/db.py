@@ -53,13 +53,14 @@ def _serialize(record: Optional[VpsRecord]) -> Optional[dict]:
     }
 
 
-def save_vps_creation(email: str, ip_address: str, password: str) -> dict:
+def save_vps_creation(email: str, ip_address: str, password: str, plan_id: int) -> dict:
     """Create or update a VPS record with the latest provisioning details."""
     record: VpsRecord = {
         "id": uuid4().hex,
         "email": email,
         "ip_address": ip_address,
         "password": password,
+        "plan_id": plan_id,
         "create_date": _utc_minus_five_now(),
         "delete_date": None,
     }
@@ -73,7 +74,7 @@ def mark_vps_deleted(email: str) -> Optional[dict]:
     """Remove VPS credentials and mark the record as deleted."""
     updates = {
         "$set": {"delete_date": _utc_minus_five_now()},
-        "$unset": {"ip_address": "", "password": ""},
+        "$unset": {"ip_address": "", "password": "", "plan_id": ""},
         "$setOnInsert": {
             "id": uuid4().hex,
             "email": email,
