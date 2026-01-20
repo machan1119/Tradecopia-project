@@ -113,6 +113,7 @@ type VpsRecord = {
   id?: string;
   email?: string;
   ip_address?: string | null;
+  plan_id?: number | null;
   create_date?: Date | null;
   delete_date?: Date | null;
 };
@@ -121,6 +122,7 @@ type SerializedRecord = {
   id: string | null;
   email: string | null;
   ip_address: string | null;
+  plan_id?: number | null;
   create_date: string | null;
   delete_date: string | null;
 };
@@ -130,6 +132,7 @@ function serializeRecord(record: VpsRecord): SerializedRecord {
     id: record.id ?? null,
     email: record.email ?? null,
     ip_address: record.ip_address ?? null,
+    plan_id: record.plan_id ?? null,
     create_date: record.create_date ? record.create_date.toISOString() : null,
     delete_date: record.delete_date ? record.delete_date.toISOString() : null,
   };

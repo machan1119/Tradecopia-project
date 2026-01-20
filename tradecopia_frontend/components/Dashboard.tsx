@@ -9,6 +9,7 @@ type VpsRecord = {
   id: string | null;
   email: string | null;
   ip_address: string | null;
+  plan_id: number | null;
   create_date: string | null;
   delete_date: string | null;
 };
@@ -165,7 +166,6 @@ export default function Dashboard() {
       router.replace("/login");
     }
   }, [router]);
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 py-8">
@@ -328,6 +328,9 @@ export default function Dashboard() {
                       IP Address
                     </th>
                     <th scope="col" className="px-4 py-3 font-medium">
+                      Plan
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-medium">
                       Created
                     </th>
                     <th scope="col" className="px-4 py-3 font-medium">
@@ -345,6 +348,15 @@ export default function Dashboard() {
                       </td>
                       <td className="whitespace-nowrap px-4 py-3 text-slate-200">
                         {record.ip_address ?? "—"}
+                      </td>
+                      <td className="whitespace-nowrap px-4 py-3 text-slate-200">
+                        {record.plan_id == 1
+                          ? "Basic"
+                          : record.plan_id == 2
+                          ? "Standard"
+                          : record.plan_id == 3
+                          ? "Expert"
+                          : "-"}
                       </td>
                       <td className="whitespace-nowrap px-4 py-3 text-slate-200">
                         {formatDate(record.create_date)}
