@@ -63,12 +63,12 @@ async def admin_create_vps(request: Request, api_key: str = Depends(verify_api_k
     add_user(email)
     user_id = get_uid_with_email(email)
     vps_details = create_vps(user_id, plan_id)
-    # save_vps_creation(
-    #     email=email,
-    #     ip_address=vps_details["ip_address"],
-    #     password=vps_details["password"],
-    #     plan_id=plan_id,
-    # )
+    save_vps_creation(
+        email=email,
+        ip_address=vps_details["ip_address"],
+        password=vps_details["password"],
+        plan_id=plan_id,
+    )
 
     return vps_details
 
