@@ -10,7 +10,9 @@ def generate_random_hostname(length: int = 15) -> str:
     if length <= 0:
         raise ValueError("length must be positive")
     letters = string.ascii_letters  # A-Z a-z
-    hostname =  "".join(secrets.choice(letters) for _ in range(length)) + ".com"
+    hostname = (
+        "".join(secrets.choice(letters) for _ in range(length)) + ".tradingvps.io"
+    )
     return hostname
 
 
@@ -46,5 +48,3 @@ def generate_strong_password(length: int = 12) -> str:
         password_chars[i], password_chars[j] = password_chars[j], password_chars[i]
 
     return "".join(password_chars)
-
-

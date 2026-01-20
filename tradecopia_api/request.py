@@ -32,7 +32,7 @@ def test():
     # action = "delete_vps"
     action = "create_vps"
 
-    payload = {"email": "test@tradecopia.com", "plan_id": 2}
+    payload = {"email": "test@tradecopia.com", "plan_id": 3}
     # payload = {"email": "test@tradecopia.com"}
 
     try:
